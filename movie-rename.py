@@ -85,3 +85,9 @@ for root, dirs, files in os.walk(path):
                     os.rename(file, name)
             else:
                 os.rename(file, name)
+
+    # Clear out empty folders
+    for dir in dirs:
+        dir_path = os.path.join(root, dir)
+        if len(os.listdir(dir_path)) == 0:
+            os.rmdir(dir_path)

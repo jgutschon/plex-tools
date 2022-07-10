@@ -32,7 +32,7 @@ for root, dirs, files in os.walk(path):
 
         # Clean junk files
         if ext in junk_files:
-            os.remove(file)
+            os.remove(os.path.join(root, file))
         else:
             # Find season number
             result = re.search(season_regex, file)
@@ -60,3 +60,9 @@ for root, dirs, files in os.walk(path):
                 f"{os.path.join(root, file)}",
                 f"{season_name}/{series_name} - s{season_num}e{episode_num}.{ext}"
             )
+
+    # Clear out empty folders
+    for dir in dirs:
+        dir_path = os.path.join(root, dir)
+        if len(os.listdir(dir_path)) == 0:
+            os.rmdir(dir_path)
